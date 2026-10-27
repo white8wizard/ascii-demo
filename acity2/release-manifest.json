@@ -1,0 +1,7 @@
+{
+  "assets": {
+    "wasm": {
+      "file": "./simulation_engine.wasm"
+    }
+  }
+}
