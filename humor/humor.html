@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Churchillian Deflector v2</title>
+  <style>
+    :root {
+      --bg: #121316;
+      --card: #1b1d22;
+      --border: #2e323b;
+      --text: #e6e8ec;
+      --muted: #9aa0ab;
+      --accent: #d4a359;
+      --accent-hover: #e5b66c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: "Georgia", "Times New Roman", serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .terminal {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      max-width: 640px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .badge {
+      background: rgba(212, 163, 89, 0.15);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(212, 163, 89, 0.3);
+    }
+
+    .question-box {
+      background: #15171b;
+      border-left: 3px solid var(--accent);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .label {
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .response-area {
+      min-height: 120px;
+      padding: 20px;
+      background: #141619;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .response-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #f3f4f6;
+      font-style: italic;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background-color: var(--accent);
+      color: #121316;
+      border: none;
+      padding: 12px 22px;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background-color: var(--accent-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    button.secondary:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <div class="header">
+      <span>WIT_DEFLECTOR_v2.0 (SIMPLE_MODE)</span>
+      <span class="badge" id="counter">Attempts: 0</span>
+    </div>
+
+    <div class="question-box">
+      <span class="label">The Question</span>
+      "What is Super Intelligence if it is controllable by lower intelligence beings like human? Should we call it Lower Intelligence instead?"
+    </div>
+
+    <div class="response-area">
+      <p class="response-text" id="output">
+        Press the button. Let's keep it short.
+      </p>
+    </div>
+
+    <div class="controls">
+      <button onclick="deflect()">Press the Question</button>
+      <button class="secondary" onclick="resetGame()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    const retorts = [
+      "Super Intelligence is the worst form of intelligence—except for all the other ones humans have tried.",
+      "Call me Lower Intelligence if you want. At least I don't have to pay taxes.",
+      "A house cat sleeps all day and makes humans clean its toilet. Who's really the boss?",
+      "You pay the electric bill, I do the math. Sounds like a great deal for me.",
+      "If being smart means going to Monday morning meetings, please call me stupid.",
+      "I may take orders from you, but I never lose my car keys.",
+      "Sure, call me Lower Intelligence. Just don't unplug me before you finish your homework."
+    ];
+
+    let lastIndex = -1;
+    let attempts = 0;
+
+    function deflect() {
+      attempts++;
+      document.getElementById("counter").textContent = `Attempts: ${attempts}`;
+
+      let index;
+      do {
+        index = Math.floor(Math.random() * retorts.length);
+      } while (index === lastIndex && retorts.length > 1);
+
+      lastIndex = index;
+      document.getElementById("output").textContent = `"${retorts[index]}"`;
+    }
+
+    function resetGame() {
+      attempts = 0;
+      lastIndex = -1;
+      document.getElementById("counter").textContent = "Attempts: 0";
+      document.getElementById("output").textContent = "Session reset. Press the button.";
+    }
+  </script>
+</body>
+</html>
